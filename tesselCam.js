@@ -1,14 +1,14 @@
 var av = require('tessel-av');
 var os = require('os');
 var http = require('http');
-var express = require('express');
+// var express = require('express');
 var socket = require("socket.io");
 const io = require('socket.io-client');
 var camera = new av.Camera();
 
-var socket = io.connect("http://localhost:4000");
+var socket = io.connect("http://10.0.1.42:4000/");
 console.log('should have connection')
-console.log(socket);
+// console.log(socket);
 
 
 socket.on('takePicture', function(data){
@@ -17,7 +17,7 @@ socket.on('takePicture', function(data){
 
   //https://stackoverflow.com/questions/28007514/piping-stream-to-a-variable-or
   //assuming camera.capture is a readable stream because it pipes(response) in demo
-  // var readable = camera.capture();
+  // var readable = camera.capture().pipe(response);
   // var result;
   // //maybe able to just emit from here...
   // readable.on('data', function(chunk){

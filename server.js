@@ -1,6 +1,6 @@
 // var av = require('tessel-av');
 // var os = require('os');
-var http = require('http');
+// var http = require('http');
 var express = require('express');
 var socket = require("socket.io");
 // var camera = new av.Camera();
