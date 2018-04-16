@@ -1,10 +1,10 @@
-var av = require('tessel-av');
-var os = require('os');
+// var av = require('tessel-av');
+// var os = require('os');
 var http = require('http');
 var express = require('express');
 var socket = require("socket.io");
-var camera = new av.Camera();
-var port = 8000;
+// var camera = new av.Camera();
+
 
 //app setup
 var app = express()
@@ -29,7 +29,15 @@ var io = socket(server);
 io.on('connection', function(socket){
   console.log(`Made socket connection to id ${socket.id}`)
 
-  socket.emit('hello', 'can you hear me?', 1, 2, 'abc');
+  //send command to tessel to take pic
+  socket.emit('takePicture', true);
+  // setInterval(function(){ 
+  //   console.log('interval');
+  //   socket.emit('hello', 'can you hear me?'); 
+  // }, 1000);
+  socket.on('image', function(data){
+    console.log(data);
+  })
 
   //listen
   // socket.on('chat', function(data){
