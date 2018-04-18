@@ -14,7 +14,7 @@ var server = app.listen(4000, function(){
 
 app.get('/', function (req, res) {
   takePicture();
-  res.send('hello world')
+  res.sendfile(__dirname + '/public/index.html');
 })
 
 //static serves index.html out of public
