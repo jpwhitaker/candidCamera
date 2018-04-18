@@ -27,7 +27,7 @@ socket.on('takePicture', function(data){
     .on('end', () => {
       axios({
         method: 'POST',
-        url: `${computerIP}upload`,
+        url: `${computerIP}upload?id=${id}`,
         headers: {
           'Content-Type': 'image/jpeg',
         },
