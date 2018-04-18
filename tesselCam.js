@@ -27,7 +27,7 @@ socket.on('takePicture', function(data){
     .on('end', () => {
       axios({
         method: 'POST',
-        url: `${computerIP}upload?id=${id}`,
+        url: `${computerIP}upload`,
         headers: {
           'Content-Type': 'image/jpeg',
         },
@@ -35,40 +35,3 @@ socket.on('takePicture', function(data){
       }).catch(console.error)   
   })
 });
-
-
-
-
-
-  //1. take pic
-  //2. send pic
-  // const dir = path.join(__dirname, `captures/`)
-  // var fileNum = 0
-
-  // //get directory and file number
-  // fs.readdir(dir, (err, files) => {
-  //   if (files == undefined){
-  //     //make directory
-  //     fs.mkdirSync( dir );
-  //   } else {
-  //     fileNum = files.length;
-  //   }
-  //   //call image capture
-  //   takeImage();
-  // });
-
-  // //https://stackoverflow.com/questions/28007514/piping-stream-to-a-variable-or
-  // //assuming camera.capture is a readable stream because it pipes(response) in demo
-  // takeImage = function(){
-  //   const capture = camera.capture();
-
-  //   capture.on('data', function(data) {
-  //     fs.writeFile(`${dir}${fileNum}.jpg`, data);
-  //   });
-
-  //   capture.on('end', function(){
-  //     console.log('wrote file')
-  //   })
-  // }
-
-  // socket.emit('image', "Here is the image");

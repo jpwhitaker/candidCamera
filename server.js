@@ -3,9 +3,6 @@ var express = require('express');
 var socket = require("socket.io");
 var jpeg = require('jpeg-js');
 
-const queue = [];
-
-
 //app setup
 var app = express();
 var globalSocket;
@@ -19,18 +16,12 @@ app.get('/', function (req, res) {
   //sends take pic signal via sockets
   //tessel sends back pic and we save
   //respond to request after save
+  takePicture();
 
-  const id = queue.length;
-
-  queue.push(new Promise((resolve, reject)=>{
-    takePicture();
-
-  }))
-
-  res.sendFile(__dirname + '/public/index.html');
-
-  
-
+  setTimeout(function(){
+    //waiting for /upload to finish
+    res.sendFile(__dirname + '/public/index.html');
+  },600)
 })
 
 //static serves index.html out of public
@@ -46,8 +37,9 @@ io.on('connection', function(socket){
   takePicture();
 })
 
-var takePicture = (id) => {
-  globalSocket.emit('takePicture', id);
+var takePicture = () => {
+  globalSocket.emit('takePicture', true);
+
 }
 
 
