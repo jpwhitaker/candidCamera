@@ -5,6 +5,17 @@ var jpeg = require('jpeg-js');
 
 const queue = [];
 
+class Job {
+  constructor(job, callback){
+    this.callback = callback;
+    job();
+  }
+
+  complete(){
+    this.callback()
+  }
+}
+
 
 //app setup
 var app = express();
@@ -22,15 +33,7 @@ app.get('/', function (req, res) {
 
   const id = queue.length;
 
-  queue.push(new Promise((resolve, reject)=>{
-    takePicture();
-
-  }))
-
-  res.sendFile(__dirname + '/public/index.html');
-
-  
-
+  queue.push(new Job(()=>{takePicture(id)}, ()=>{res.sendFile(__dirname + '/public/index.html')}))
 })
 
 //static serves index.html out of public
@@ -53,9 +56,13 @@ var takePicture = (id) => {
 
 app.post('/upload', function(request, res) {
   console.log('saving pic');
-  request.pipe(fs.createWriteStream(__dirname + `/public/${Date.now()}.jpg`));  
+  // console.log(request);
+  const id = request.query.id;
+  request.pipe(fs.createWriteStream(__dirname + `/public/${Date.now()}-${id}.jpg`));  
   request.pipe(fs.createWriteStream(__dirname + `/public/newest.jpg`))
     .on('end', function(){
+      job = queue[request.query.id];
+      job.complete();
       res.sendStatus(200);
     })
 });

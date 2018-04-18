@@ -15,7 +15,7 @@ var computerIP = "http://10.0.1.42:4000/"
 var socket = io.connect(computerIP);
 console.log('should have connection')
 
-socket.on('takePicture', function(data){
+socket.on('takePicture', function(id){
   console.log('taking pic')
 
   var chunks = [];
