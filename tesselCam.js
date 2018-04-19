@@ -10,7 +10,7 @@ const io = require('socket.io-client');
 var camera = new av.Camera();
 var takeImage;
 
-var computerIP = "http://10.0.1.42:4000/"
+var computerIP = "http://167.99.27.206:4000/"
 
 var socket = io.connect(computerIP);
 console.log('should have connection')

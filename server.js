@@ -49,11 +49,12 @@ var takePicture = () => {
 
 app.post('/upload', function(request, res) {
   console.log('saving pic');
+  var fileName = __dirname + `/public/${Date.now()}.jpg`
   request.pipe(fs.createWriteStream(__dirname + `/public/${Date.now()}.jpg`));  
-  request.pipe(fs.createWriteStream(__dirname + `/public/newest.jpg`))
+  // request.pipe(fs.createWriteStream(__dirname + `/public/newest${Date.now()}.jpg`))
     .on('finish', function(){
-      console.log("ENDING")
-      globalRes.sendFile(__dirname + '/public/index.html');
+      console.log("ENDING");
+      globalRes.sendFile(fileName);
       res.sendStatus(200);
       console.timeEnd('get/')
     })
