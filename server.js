@@ -1,7 +1,6 @@
 var fs = require('fs')
 var express = require('express');
 var socket = require("socket.io");
-var jpeg = require('jpeg-js');
 var app = express();
 
 //triggered by phone going to site
@@ -17,13 +16,10 @@ var server = app.listen(4000, function(){
 })
 
 app.get('/', function (req, res) {
-  console.time('get/')
+  console.time('get/');
   globalRes = res;
   takePicture();
 })
-
-//serves index.html out of public
-app.use(express.static('public'))
 
 //socket setup
 var io = socket(server);
@@ -39,12 +35,12 @@ var takePicture = () => {
 
 app.post('/upload', function(request, res) {
   console.log('saving pic');
-  var fileName = __dirname + `/public/${Date.now()}.jpg`
+  var fileName = __dirname + `/public/${Date.now()}.jpg`;
   request.pipe(fs.createWriteStream(__dirname + `/public/${Date.now()}.jpg`))
   .on('finish', function(){
     console.log("ENDING");
     globalRes.sendFile(fileName);
     res.sendStatus(200);
-    console.timeEnd('get/')
-  })
+    console.timeEnd('get/');
+  });
 });
