@@ -1,12 +1,10 @@
-var av = require('tessel-av');
+const av = require('tessel-av');
 const axios = require('axios');
 const io = require('socket.io-client');
-var camera = new av.Camera();
-var takeImage;
+const camera = new av.Camera();
+const computerIP = "http://167.99.27.206:4000/"
 
-var computerIP = "http://167.99.27.206:4000/"
-
-var socket = io.connect(computerIP);
+const socket = io.connect(computerIP);
 console.log('should have connection')
 
 socket.on('takePicture', function(data){

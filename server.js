@@ -1,26 +1,26 @@
-var fs = require('fs')
-var express = require('express');
-var socket = require("socket.io");
-var app = express();
+const fs = require('fs')
+const express = require('express');
+const socket = require("socket.io");
+const app = express();
 
 //1. triggered by phone going to site
 //2. sends take pic signal via sockets
 //3. tessel sends back pic and we save to disk
 //4. respond to request by sending image after save
 
-var globalSocket;
-var globalRes;
+let globalSocket;
+let globalRes;
 
-var takePicture = () => {
+const takePicture = () => {
   globalSocket.emit('takePicture', true);
 }
 
-var server = app.listen(4000, function(){
+const server = app.listen(4000, function(){
   console.log('listening to requests on port 4000')
 })
 
 //socket setup
-var io = socket(server);
+const io = socket(server);
 io.on('connection', function(socket){
   globalSocket = socket;
   console.log(`Made socket connection to id ${socket.id}`)
